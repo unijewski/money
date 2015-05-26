@@ -12,8 +12,17 @@ describe Money do
   end
 
   describe '.from_<currency>' do
-    money = described_class.from_eur(10)
-    it { expect(money).to be_an_instance_of Money  }
-    it { expect(money.to_s).to eq '10.00 EUR' }
+    it 'should create an instance of Money class' do
+      money = described_class.from_eur(10)
+      expect(money).to be_an_instance_of Money
+    end
+  end
+
+  describe '#Money' do
+    it 'should create a Money object' do
+      money = Money(10, 'PLN')
+      expect(money).to be_an_instance_of Money
+      expect(money.to_s).to eq '10.00 PLN'
+    end
   end
 end

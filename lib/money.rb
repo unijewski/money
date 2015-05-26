@@ -30,3 +30,7 @@ class Money
     '%.2f' % amount
   end
 end
+
+def Money(amount, currency)
+  Money.new(amount, currency)
+end
