@@ -1,11 +1,13 @@
 require 'spec_helper'
 
 describe Money do
-  it 'has a version number' do
-    expect(Money::VERSION).not_to be nil
+  subject { described_class.new(10, 'USD') }
+
+  describe '#to_s' do
+    it { expect(subject.to_s).to eq '10.00 USD' }
   end
 
-  it 'does something useful' do
-    expect(false).to eq(true)
+  describe '#inspect' do
+    it { expect(subject.inspect).to eq '#<Money 10.00 USD>'}
   end
 end
