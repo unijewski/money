@@ -1,5 +1,5 @@
 require 'money/version'
-require 'pry'
+require 'money/exchange'
 
 class Money
   attr_accessor :amount, :currency
@@ -7,7 +7,8 @@ class Money
   CURRENCIES = %w(usd eur gbp)
 
   def initialize(amount, currency)
-    @amount, @currency = amount, currency
+    @amount = amount
+    @currency = currency.upcase
   end
 
   def to_s
@@ -15,19 +16,29 @@ class Money
   end
 
   def inspect
-    "#<Money #{self.to_s}>"
+    "#<Money #{self}>"
   end
 
   CURRENCIES.each do |currency|
     define_singleton_method("from_#{currency}") do |argument|
-      new(argument, currency.upcase)
+      new(argument, currency)
     end
+  end
+
+  def self.exchange
+    Exchange.new
+  end
+
+  def exchange_to(currency)
+    self.amount = Money.exchange.convert(self, currency)
+    self.currency = currency
+    self
   end
 
   private
 
   def precise_amount
-    '%.2f' % amount
+    format('%.2f', amount)
   end
 end
 
