@@ -2,6 +2,8 @@ require 'money/version'
 require 'money/exchange'
 
 class Money
+  include Comparable
+
   attr_accessor :amount, :currency
 
   CURRENCIES = %w(usd eur gbp)
@@ -33,6 +35,10 @@ class Money
     self.amount = Money.exchange.convert(self, currency)
     self.currency = currency
     self
+  end
+
+  def <=>(other)
+    exchange_to(other.currency).amount <=> other.amount
   end
 
   private

@@ -34,6 +34,12 @@ describe Money do
     end
   end
 
+  describe '#<=>' do
+    it { expect(subject < Money(10, 'EUR')).to eq true }
+    it { expect(subject > Money(10, 'EUR')).to eq false }
+    it { expect(Money(10_000, 'USD') == Money(9211, 'EUR')).to eq true }
+  end
+
   describe '#Money' do
     it 'should create a Money object' do
       money = Money(10, 'PLN')
