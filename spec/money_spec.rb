@@ -40,6 +40,22 @@ describe Money do
     it { expect(Money(10_000, 'USD') == Money(9211, 'EUR')).to eq true }
   end
 
+  describe '.using_default_currency' do
+    context 'when we create a new instance inside the block' do
+      it 'should create the instance' do
+        expect(Money.using_default_currency('usd') { Money.new(10) }).to be_an_instance_of Money
+        expect(Money.using_default_currency('usd') { Money(10) }).to be_an_instance_of Money
+      end
+    end
+
+    context 'when we create a new instance without the block' do
+      it 'should raise an error' do
+        expect { Money.new(10) }.to raise_error ArgumentError
+        expect { Money(10) }.to raise_error ArgumentError
+      end
+    end
+  end
+
   describe '#Money' do
     it 'should create a Money object' do
       money = Money(10, 'PLN')

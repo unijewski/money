@@ -4,11 +4,17 @@ require 'money/exchange'
 class Money
   include Comparable
 
+  class << self
+    attr_accessor :default_currency
+  end
+
   attr_accessor :amount, :currency
 
   CURRENCIES = %w(usd eur gbp)
 
-  def initialize(amount, currency)
+  def initialize(amount, currency = Money.default_currency)
+    fail ArgumentError if currency.nil?
+
     @amount = amount
     @currency = currency.upcase
   end
@@ -41,6 +47,13 @@ class Money
     exchange_to(other.currency).amount <=> other.amount
   end
 
+  def self.using_default_currency(currency)
+    self.default_currency = currency
+    yield
+  ensure
+    self.default_currency = nil
+  end
+
   private
 
   def precise_amount
@@ -48,6 +61,6 @@ class Money
   end
 end
 
-def Money(amount, currency)
+def Money(amount, currency = Money.default_currency)
   Money.new(amount, currency)
 end
