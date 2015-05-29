@@ -10,7 +10,7 @@ class Money
 
   attr_accessor :amount, :currency
 
-  CURRENCIES = %w(usd eur gbp)
+  CURRENCIES = %w(usd eur gbp jpy)
 
   def initialize(amount, currency = Money.default_currency)
     fail ArgumentError if currency.nil?
@@ -52,6 +52,15 @@ class Money
     yield
   ensure
     self.default_currency = nil
+  end
+
+  def method_missing(method_name)
+    currency = method_name.to_s.split('_').last
+    if CURRENCIES.include? currency
+      exchange_to(currency.upcase)
+    else
+      fail NoMethodError
+    end
   end
 
   private

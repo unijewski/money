@@ -56,6 +56,20 @@ describe Money do
     end
   end
 
+  describe '#method_missing' do
+    context 'when a currency exists' do
+      it 'should not raise an error' do
+        expect { subject.to_eur }.not_to raise_error
+      end
+    end
+
+    context 'when a currency does not exist' do
+      it 'should raise an error' do
+        expect { subject.to_asd }.to raise_error NoMethodError
+      end
+    end
+  end
+
   describe '#Money' do
     it 'should create a Money object' do
       money = Money(10, 'PLN')
