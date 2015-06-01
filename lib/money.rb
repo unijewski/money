@@ -63,6 +63,10 @@ class Money
     end
   end
 
+  def respond_to_missing?(method_name, include_private = false)
+    method_name.to_s.start_with?('to_') || super
+  end
+
   private
 
   def precise_amount

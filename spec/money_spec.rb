@@ -58,7 +58,8 @@ describe Money do
 
   describe '#method_missing' do
     context 'when a currency exists' do
-      it 'should not raise an error' do
+      it 'should respond to the method' do
+        expect(subject.respond_to?(:to_eur)).to eq true
         expect { subject.to_eur }.not_to raise_error
       end
     end
