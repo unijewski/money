@@ -12,7 +12,7 @@ class Exchange
     currencies_valid?(currency_in, currency_out)
 
     exchange = rates["#{currency_in}_#{currency_out}"]
-    exchange * money.amount
+    BigDecimal.new(exchange.to_s) * money.amount
   end
 
   private

@@ -1,5 +1,6 @@
 require 'money/version'
 require 'money/exchange'
+require 'bigdecimal'
 
 class Money
   include Comparable
@@ -15,7 +16,7 @@ class Money
   def initialize(amount, currency = Money.default_currency)
     fail ArgumentError if currency.nil?
 
-    @amount = amount
+    @amount = BigDecimal.new(amount.to_s)
     @currency = currency.upcase
   end
 
