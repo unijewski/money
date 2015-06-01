@@ -3,6 +3,15 @@ require 'spec_helper'
 describe Money do
   subject { described_class.new(10, 'USD') }
 
+  before do
+    file = Pathname(__FILE__).dirname + 'fixtures/rates.json'
+    response_body = File.read(file)
+
+    stub_request(:get, 'http://www.freecurrencyconverterapi.com/api/v3/convert')
+      .with(query: { q: 'USD_EUR', compact: 'ultra' })
+      .to_return(status: 200, body: response_body, headers: { content_type: 'application/json' })
+  end
+
   describe '#to_s' do
     it { expect(subject.to_s).to eq '10.00 USD' }
   end

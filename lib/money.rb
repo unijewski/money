@@ -1,5 +1,6 @@
 require 'money/version'
 require 'money/exchange'
+require 'money/currency_converter'
 require 'bigdecimal'
 
 class Money
