@@ -80,6 +80,18 @@ describe Money do
     end
   end
 
+  describe 'Arithmetic operations' do
+    it 'should add two currencies' do
+      subject = Money(10, 'EUR') + Money(10, 'USD')
+      expect(subject.to_s).to eq '19.21 EUR'
+    end
+
+    it 'should multiply the currency by the given number' do
+      subject = Money(10, 'EUR') * 3
+      expect(subject.to_s).to eq '30.00 EUR'
+    end
+  end
+
   describe '#Money' do
     it 'should create a Money object' do
       money = Money(10, 'PLN')

@@ -69,6 +69,20 @@ class Money
     method_name.to_s.start_with?('to_') || super
   end
 
+  [:+, :-].each do |method|
+    define_method(method) do |arg|
+      self.amount = amount.public_send(method, arg.exchange_to(currency).amount)
+      self
+    end
+  end
+
+  [:*, :/].each do |method|
+    define_method(method) do |arg|
+      self.amount = amount.public_send(method, arg)
+      self
+    end
+  end
+
   private
 
   def precise_amount
