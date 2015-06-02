@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Exchange do
+describe Money::Exchange do
   subject { Money.exchange }
 
   before do
@@ -23,7 +23,7 @@ describe Exchange do
       it 'should raise an error' do
         expect do
           subject.convert(Money(10, 'USD'), 'whatever')
-        end.to raise_error(Exchange::InvalidCurrency, 'whatever')
+        end.to raise_error(Money::Exchange::InvalidCurrency, 'WHATEVER')
       end
     end
   end

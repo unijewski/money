@@ -38,7 +38,7 @@ describe Money do
       it 'should raise an error' do
         expect do
           subject.exchange_to('whatever').inspect
-        end.to raise_error(Exchange::InvalidCurrency, 'whatever')
+        end.to raise_error(Money::Exchange::InvalidCurrency, 'WHATEVER')
       end
     end
   end

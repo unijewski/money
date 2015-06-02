@@ -1,7 +1,9 @@
 require 'httparty'
 
-class CurrencyConverter
-  include HTTParty
+class Money
+  class CurrencyConverter
+    include HTTParty
 
-  base_uri 'http://www.freecurrencyconverterapi.com/api/v3'
+    base_uri 'http://www.freecurrencyconverterapi.com/api/v3'
+  end
 end
