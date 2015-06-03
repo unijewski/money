@@ -1,5 +1,6 @@
 require 'money/exchange'
 require 'money/currency_converter'
+require 'money/kernel'
 require 'bigdecimal'
 
 class Money
@@ -87,8 +88,4 @@ class Money
   def precise_amount
     format('%.2f', amount)
   end
-end
-
-def Money(amount, currency = Money.default_currency)
-  Money.new(amount, currency)
 end
