@@ -75,6 +75,7 @@ describe Money do
 
     context 'when a currency does not exist' do
       it 'should raise an error' do
+        expect { subject.abc_eur }.to raise_error NoMethodError
         expect { subject.to_asd }.to raise_error NoMethodError
       end
     end

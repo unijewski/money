@@ -57,6 +57,7 @@ class Money
   end
 
   def method_missing(method_name)
+    fail NoMethodError unless method_name.to_s.start_with?('to_')
     currency = method_name.to_s.split('_').last
     if CURRENCIES.include? currency
       exchange_to(currency.upcase)
