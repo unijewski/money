@@ -50,6 +50,18 @@ describe Money do
   end
 
   describe '.using_default_currency' do
+    let(:block) do
+      Money.using_default_currency('USD') do
+        @money1 = Money(10)
+
+        Money.using_default_currency('EUR') do
+          @money2 = Money(20)
+        end
+
+        @money3 = Money(30)
+      end
+    end
+
     context 'when we create a new instance inside the block' do
       it 'should create the instance' do
         expect(Money.using_default_currency('usd') { Money.new(10) }).to be_an_instance_of Money
@@ -61,6 +73,35 @@ describe Money do
       it 'should raise an error' do
         expect { Money.new(10) }.to raise_error ArgumentError
         expect { Money(10) }.to raise_error ArgumentError
+      end
+    end
+
+    context 'when we have nested blocks' do
+      before { block }
+
+      it 'should create all instances inside of them' do
+        expect(@money1.to_s).to eq '10.00 USD'
+        expect(@money2.to_s).to eq '20.00 EUR'
+        expect(@money3.to_s).to eq '30.00 USD'
+      end
+
+      it 'should raise an error for instance created outside the block' do
+        expect { @money4 = Money(40) }.to raise_error ArgumentError
+      end
+    end
+
+    context 'when the block returns an error' do
+      it 'should not be able to create a new instance of Money w/o the second attr' do
+        expect do
+          begin
+            Money.using_default_currency('USD') do
+              fail 'Error'
+            end
+          rescue RuntimeError => e
+            puts "#{e}"
+          end
+          Money(50)
+        end.to raise_error ArgumentError
       end
     end
   end

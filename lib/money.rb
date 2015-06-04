@@ -50,10 +50,12 @@ class Money
   end
 
   def self.using_default_currency(currency)
+    initial_value = default_currency
     self.default_currency = currency
-    yield
+    object = yield
   ensure
-    self.default_currency = nil
+    self.default_currency = initial_value
+    object
   end
 
   def method_missing(method_name)
